@@ -20,19 +20,25 @@ object CollectionTransformer {
     var dType: DynamoType = DynamoString
     while (iterator.hasNext) {
       val f = iterator.next()
-      val attr = TransformerRegistry(f.getClass) match {
-        case None => {
-          val attr = new AttributeValue()
-          attr.setS(f.toString)
-          attr
-        }
-        case Some(transformer) => transformer.transform(f)
-      }
+      val attr = getAttribute(f.getClass, f)
       dType = DynamoType(attr)
       list.add(GetAttributeValue(attr).toString)
     }
+    createAttribute(dType, list)
+  }
+
+  private def getAttribute(cls: Class[_], any: Any): AttributeValue = TransformerRegistry(cls) match {
+    case None => {
+      val attr = new AttributeValue()
+      attr.setS(any.toString)
+      attr
+    }
+    case Some(transformer) => transformer.transform(any)
+  }
+  
+  private def createAttribute(dType: DynamoType, list: java.util.List[String]): AttributeValue = {
     val attribute = new AttributeValue()
-    dType match{
+    dType match {
       case DynamoString => attribute.setSS(list)
       case DynamoNumber => attribute.setNS(list)
     }
@@ -43,24 +49,11 @@ object CollectionTransformer {
     val list = new java.util.ArrayList[String]
     var dType: DynamoType = DynamoString
     collection.foreach(f => {
-      val attr = TransformerRegistry(f.getClass) match {
-        case None => {
-          val attr = new AttributeValue()
-          attr.setS(f.toString)
-          attr
-        }
-        case Some(transformer) => transformer.transform(f)
-      }
+      val attr = getAttribute(f.getClass, f)
       dType = DynamoType(attr)
       list.add(GetAttributeValue(attr).toString)
-
     })
-    val attribute = new AttributeValue()
-    dType match{
-      case DynamoString => attribute.setSS(list)
-      case DynamoNumber => attribute.setNS(list)
-    }
-    attribute
+    createAttribute(dType, list)
   }
 }
 

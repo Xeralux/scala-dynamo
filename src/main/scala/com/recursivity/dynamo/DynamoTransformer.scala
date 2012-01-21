@@ -39,38 +39,24 @@ object DynamoTransformer {
       } else if (classOf[java.util.Collection[_ <: Any]].isAssignableFrom(cls)) {
         map.put(field.getName, CollectionTransformer(field.get(caseClass).asInstanceOf[java.util.Collection[_ <: Any]]))
       } else if (classOf[Option[_ <: Any]].isAssignableFrom(cls)) {
-        field.get(caseClass).asInstanceOf[Option[_]] match {
-          case Some(s) => {
-            TransformerRegistry(s.getClass) match{
-              case None => {
-                val attr = new AttributeValue()
-                attr.setS(s.toString)
-                attr
-                map.put(field.getName, attr)
-              }
-              case Some(transformer) => map.put(field.getName, transformer.transform(s))
-            }           
-          }
-          case None => {}
-        }
+        field.get(caseClass).asInstanceOf[Option[_]].foreach(s => {
+          map.put(field.getName, getValue(s.getClass, s))
+        })
       } else {
-        map.put(field.getName, getValue(field, caseClass))
+        map.put(field.getName, getValue(field.getType, field.get(caseClass)))
       }
     })
     map
   }
 
-  private def getValue(field: Field, caseClass: Any): AttributeValue = {
-    TransformerRegistry(field.getType) match {
+  private def getValue(valueType: Class[_], fieldValue: Any): AttributeValue = {
+    TransformerRegistry(valueType) match {
       case None => {
         val attr = new AttributeValue()
-        attr.setS(field.get(caseClass).toString)
+        attr.setS(fieldValue.toString)
         attr
       }
-      case Some(transformer) => {
-        transformer.transform(field.get(caseClass))
-      }
+      case Some(transformer) => transformer.transform(fieldValue)
     }
   }
-
 }
