@@ -14,10 +14,8 @@ import com.amazonaws.services.dynamodb.model.AttributeValue
 
 class DateTransformer extends AttributeValueTransformer{
   def transform(any: Any) = {
-    val df = new SimpleDateFormat("yyyyyMMddHHmmssSSSZ")
-    val string = df.format(any.asInstanceOf[java.util.Date])
     val attr = new AttributeValue()
-    attr.setS(string)
+    attr.setS(new SimpleDateFormat("yyyyyMMddHHmmssSSSZ").format(any.asInstanceOf[java.util.Date]))
     attr
   }
 }
