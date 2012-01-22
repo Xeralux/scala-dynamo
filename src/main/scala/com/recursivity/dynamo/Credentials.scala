@@ -25,6 +25,8 @@ object Credentials {
 
     def credentials = new Credentials(accessKey, secretKey)
 
+  def apply() = credentials
+
 }
 
 case class Credentials(access: String, secret: String) extends AWSCredentials{
