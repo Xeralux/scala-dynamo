@@ -23,10 +23,12 @@ object TransformerRegistry {
   registry += classOf[java.lang.Integer] -> classOf[NumberValueTransformer]
   registry += classOf[java.lang.Long] -> classOf[NumberValueTransformer]
   registry += classOf[java.lang.Double] -> classOf[NumberValueTransformer]
+  registry += classOf[Double] -> classOf[NumberValueTransformer]
   registry += classOf[java.lang.Float] -> classOf[NumberValueTransformer]
   registry += classOf[Long] -> classOf[NumberValueTransformer]
   registry += classOf[Short] -> classOf[NumberValueTransformer]
   registry += classOf[java.lang.Short] -> classOf[NumberValueTransformer]
+  registry += classOf[Float] -> classOf[NumberValueTransformer]
 
 
   def apply(clazz: Class[_]): Option[AttributeValueTransformer] = {
