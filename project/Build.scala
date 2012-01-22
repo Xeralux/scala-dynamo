@@ -34,12 +34,22 @@ object ScalaDynamo extends Build {
 
 
   val repos = Seq("Sonatype Nexus releases" at "https://oss.sonatype.org/content/repositories/releases",
-    "Sonatype Nexus snapshots" at "https://oss.sonatype.org/content/repositories/snapshots")
+    "Sonatype Nexus snapshots" at "https://oss.sonatype.org/content/repositories/snapshots",
+	"maven central" at "http://repo1.maven.org/maven2/")
 
   val sonatypeSnapshots = "Sonatype Nexus Snapshots" at "https://oss.sonatype.org/content/repositories/snapshots"
   object Dependencies {
     //val base64 = "net.iharder" % "base64" % "2.3.8"
     val specs2 = "org.specs2" %% "specs2" % "1.6.1" % "test"
+
+    val httpClient = "org.apache.httpcomponents" % "httpclient" % "4.1.2"
+
+	val commonsLogging = "commons-logging" % "commons-logging" % "1.1.1"
+	
+	val jacksonMapper = "org.codehaus.jackson" % "jackson-mapper-asl" % "1.5.0"
+	
+	val staxRi = "stax" % "stax" % "1.2.0"
+	
 
     val recursivityCommons = "com.recursivity" %% "recursivity-commons" % "0.5.7"
   }
@@ -48,7 +58,7 @@ object ScalaDynamo extends Build {
 
   lazy val scalaDynamo = Project("scala-dynamo", file("."),
     settings = parentSettings)
-    .settings(libraryDependencies := Seq(specs2, recursivityCommons),
+    .settings(libraryDependencies := Seq(specs2, recursivityCommons, httpClient, commonsLogging, jacksonMapper, staxRi),
     publishArtifact in Compile := false,
     description := "scala-dynamo",
 	resolvers ++= repos)
