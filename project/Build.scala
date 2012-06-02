@@ -49,7 +49,7 @@ object ScalaDynamo extends Build {
 	val jacksonMapper = "org.codehaus.jackson" % "jackson-mapper-asl" % "1.5.0"
 	
 	val staxRi = "stax" % "stax" % "1.2.0"
-	
+	val jodaTime = "joda-time" % "joda-time" % "2.1"	
 
     val recursivityCommons = "com.recursivity" %% "recursivity-commons" % "0.5.7"
   }
@@ -59,7 +59,7 @@ object ScalaDynamo extends Build {
   lazy val scalaDynamo = Project("scala-dynamo", file("."),
     settings = parentSettings)
     .settings(libraryDependencies := Seq(specs2, recursivityCommons, httpClient, commonsLogging, jacksonMapper, staxRi),
-    publishArtifact in Compile := false,
+    //publishArtifact in Compile := false,
     description := "scala-dynamo",
 	resolvers ++= repos)
 }
