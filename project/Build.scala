@@ -44,12 +44,14 @@ object ScalaDynamo extends Build {
 
     val httpClient = "org.apache.httpcomponents" % "httpclient" % "4.1.2"
 
-	val commonsLogging = "commons-logging" % "commons-logging" % "1.1.1"
+    val commonsLogging = "commons-logging" % "commons-logging" % "1.1.1"
 	
-	val jacksonMapper = "org.codehaus.jackson" % "jackson-mapper-asl" % "1.5.0"
+    val jodaTime = "joda-time" % "joda-time" % "2.1"	
+    val jodaConvert = "org.joda" % "joda-convert" % "1.2"	
+
+    val jacksonMapper = "org.codehaus.jackson" % "jackson-mapper-asl" % "1.5.0"
 	
-	val staxRi = "stax" % "stax" % "1.2.0"
-	val jodaTime = "joda-time" % "joda-time" % "2.1"	
+    val staxRi = "stax" % "stax" % "1.2.0"
 
     val recursivityCommons = "com.recursivity" %% "recursivity-commons" % "0.5.7"
   }
@@ -58,7 +60,7 @@ object ScalaDynamo extends Build {
 
   lazy val scalaDynamo = Project("scala-dynamo", file("."),
     settings = parentSettings)
-    .settings(libraryDependencies := Seq(specs2, recursivityCommons, httpClient, commonsLogging, jacksonMapper, staxRi),
+    .settings(libraryDependencies := Seq(specs2, recursivityCommons, httpClient, commonsLogging, jacksonMapper, staxRi, jodaTime, jodaConvert),
     //publishArtifact in Compile := false,
     description := "scala-dynamo",
 	resolvers ++= repos)
