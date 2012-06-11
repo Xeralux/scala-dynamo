@@ -53,7 +53,7 @@ object ScalaDynamo extends Build {
 	
     val staxRi = "stax" % "stax" % "1.2.0"
 
-    val recursivityCommons = "com.recursivity" %% "recursivity-commons" % "0.5.7"
+    val recursivityCommons = "com.recursivity" %% "recursivity-commons" % "0.6"
   }
 
   import Dependencies._
