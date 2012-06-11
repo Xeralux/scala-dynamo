@@ -35,9 +35,15 @@ object DynamoTransformer {
       field.setAccessible(true)
       val cls = field.getType
       if (classOf[TraversableLike[_ <: Any, _ <: Any]].isAssignableFrom(cls)) {
-        map.put(field.getName, CollectionTransformer(field.get(caseClass).asInstanceOf[TraversableLike[_ <: Any, _ <: Any]]))
+        val coll = field.get(caseClass).asInstanceOf[TraversableLike[_ <: Any, _ <: Any]]
+        // Dynamo doesn't allow putting empty collections into attributes.  So if it is empty we just
+	// leave it out.
+	if(!coll.isEmpty)
+	  map.put(field.getName, CollectionTransformer(field.get(caseClass).asInstanceOf[TraversableLike[_ <: Any, _ <: Any]]))
       } else if (classOf[java.util.Collection[_ <: Any]].isAssignableFrom(cls)) {
-        map.put(field.getName, CollectionTransformer(field.get(caseClass).asInstanceOf[java.util.Collection[_ <: Any]]))
+        val coll = field.get(caseClass).asInstanceOf[java.util.Collection[_ <: Any]]
+        if(!coll.isEmpty)
+          map.put(field.getName, CollectionTransformer(coll))
       } else if (classOf[Option[_ <: Any]].isAssignableFrom(cls)) {
         field.get(caseClass).asInstanceOf[Option[_]].foreach(s => {
           map.put(field.getName, getValue(s.getClass, s))
