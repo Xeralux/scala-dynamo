@@ -55,7 +55,7 @@ object DynamoTransformer {
     map
   }
 
-  private def getValue(valueType: Class[_], fieldValue: Any): AttributeValue = {
+  def getValue(valueType: Class[_], fieldValue: Any): AttributeValue = {
     TransformerRegistry(valueType) match {
       case None => {
         val attr = new AttributeValue()
