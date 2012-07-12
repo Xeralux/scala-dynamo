@@ -13,8 +13,9 @@ import com.amazonaws.services.dynamodb.model.AttributeValue
 
 class NumberValueTransformer extends AttributeValueTransformer{
   def transform(any: Any) = {
+    val str = any.toString
     val value = new AttributeValue
-    value.setN(any.toString)
+    value.setN(if(str == "NaN") "-1" else str)
     value
   }
 }
