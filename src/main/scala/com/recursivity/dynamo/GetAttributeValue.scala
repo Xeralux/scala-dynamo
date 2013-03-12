@@ -30,7 +30,7 @@ object DynamoMap{
       val key = iterator.next()
       val value = {
         val temp = GetAttributeValue(map.get(key))
-        if(temp.isInstanceOf[java.util.List[String]]){
+        if(temp.isInstanceOf[java.util.List[_]]){
           val iter = temp.asInstanceOf[java.util.List[String]].iterator
           val list = new MutableList[String]
           while(iter.hasNext){

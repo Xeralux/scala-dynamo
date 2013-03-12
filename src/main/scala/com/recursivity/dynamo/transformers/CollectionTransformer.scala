@@ -45,7 +45,7 @@ object CollectionTransformer {
     attribute
   }
 
-  def apply(collection: TraversableLike[_ <: Any, _ <: Any]): AttributeValue = {
+  def apply(collection: TraversableLike[Any, Any]): AttributeValue = {
     val list = new java.util.ArrayList[String]
     var dType: DynamoType = DynamoString
     collection.foreach(f => {
