@@ -10,7 +10,7 @@ object ScalaDynamo extends Build {
     parallelExecution := false,
     organization := "com.recursivity.dynamo",
     version := "1.0.0-SNAPSHOT",
-    crossScalaVersions := Seq("2.9.2"),
+    crossScalaVersions := Seq("2.10.0"),
     scalaVersion <<= (crossScalaVersions) {
       versions => versions.head
     },
@@ -40,7 +40,7 @@ object ScalaDynamo extends Build {
   val sonatypeSnapshots = "Sonatype Nexus Snapshots" at "https://oss.sonatype.org/content/repositories/snapshots"
   object Dependencies {
     //val base64 = "net.iharder" % "base64" % "2.3.8"
-    val specs2 = "org.specs2" %% "specs2" % "1.12.1" % "test"
+    val specs2 = "org.specs2" %% "specs2" % "1.14" % "test"
 
     val httpClient = "org.apache.httpcomponents" % "httpclient" % "4.1.2"
 
@@ -53,7 +53,7 @@ object ScalaDynamo extends Build {
 	
     val staxRi = "stax" % "stax" % "1.2.0"
 
-    val recursivityCommons = "com.recursivity" %% "recursivity-commons" % "0.6"
+    val recursivityCommons = "com.recursivity" %% "recursivity-commons" % "0.6-SNAPSHOT"
   }
 
   import Dependencies._
